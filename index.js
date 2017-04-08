@@ -20,7 +20,7 @@ var classifier = new ml.LogisticRegression({
 //classifier.set('log level', 0);
 classifier.set('log level', 0);
 
-var training_epochs = 800,
+var training_epochs = 900,
   lr = 0.01;
 
 classifier.train({
