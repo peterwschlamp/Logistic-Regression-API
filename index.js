@@ -1,4 +1,4 @@
-var ml = module.exports;
+let ml = module.exports;
 ml.LogisticRegression = require('./LogisticRegression');
 
 var x = [[1, 1, 1, 0, 0, 0], [1, 0, 1, 0, 0, 0], [1, 1, 1, 0, 0, 0], [0, 0, 1, 1, 1, 0], [0, 0, 1, 1, 0, 0], [0, 0, 1, 1, 1, 0]];
