@@ -1,5 +1,3 @@
-'use strict';
-
 var ml = module.exports;
 ml.LogisticRegression = require('./LogisticRegression');
 
@@ -26,4 +24,4 @@ x = [[1, 1, 0, 0, 0, 0], [0, 0, 0, 1, 1, 0], [1, 1, 1, 1, 1, 0]];
 
 //console.log("Result : ", classifier.predict(x));
 var result = classifier.predict(x);
-console.log( "Score: ", result.map(function(r){return parseInt(r[0]*100)+'%'}) );
+console.log( "Score: ", result.map((r) => parseInt(r[0]*100)+'%') );
