@@ -1,0 +1,15 @@
+{
+  "name": "ML.js",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://www.github.com/peterwschlamp/ML.js.git"
+  },
+  "author": "",
+  "license": "ISC"
+}
