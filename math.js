@@ -1,3 +1,6 @@
+/**
+ * Created by joonkukang on 2014. 1. 12..
+ */
 var m = module.exports;
 
 m.randn = function () {

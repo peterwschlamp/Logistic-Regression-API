@@ -1,5 +1,8 @@
 'use strict';
 
+/**
+ * Created by joonkukang on 2014. 1. 18..
+ */
 var utils = module.exports;
 
 utils.math = require('./math');
