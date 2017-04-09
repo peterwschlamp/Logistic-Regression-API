@@ -1,8 +1,5 @@
 'use strict';
 
-/**
- * Created by joonkukang on 2014. 1. 12..
- */
 var math = require('./utils').math;
 var LogisticRegression = module.exports = function (settings) {
   var self = this;
