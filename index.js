@@ -3,7 +3,7 @@ let ml = module.exports;
 ml.LogisticRegression = require('./LogisticRegression');
 getLogReg = require('./src/getLogReg');
 train=require('./src/training/train');
-
+predict=require('./src/predict/predict');
 
 const server = new Hapi.Server();
 server.connection({ port: 3000, host: 'localhost' });
@@ -24,6 +24,16 @@ server.route({
     }
 
 })
+
+server.route({
+    method:'POST',
+    path:'/predict',
+    handler:function(request,reply){
+        reply (predict.predict(request));
+    }
+
+})
+
 server.start((err) => {
 
     if (err) {
