@@ -1,7 +1,7 @@
 let ml = module.exports;
 ml.LogisticRegression = require('./LogisticRegression');
 
-module.exports = function getLogReg(predict){
+module.exports = function getLogReg(predictTheseInputs){
 	var x = [[1, 1, 1, 0, 0, 0], [1, 0, 1, 0, 0, 0], [1, 1, 1, 0, 0, 0], [0, 0, 1, 1, 1, 0], [0, 0, 1, 1, 0, 0], [0, 0, 1, 1, 1, 0]];
 	var y = [[1, 0], [1, 0], [1, 0], [0, 1], [0, 1], [0, 1]];
 
@@ -22,7 +22,7 @@ module.exports = function getLogReg(predict){
 	});
 
 	//x = [[1, 1, 0, 0, 0, 0], [0, 0, 0, 1, 1, 0], [1, 1, 1, 1, 1, 0]];
-	x = predict;
+	x = predictTheseInputs;
 
 	//console.log("Result : ", classifier.predict(x));
 	var result = classifier.predict(x);
