@@ -1,6 +1,6 @@
 const Hapi = require('hapi');
 let ml = module.exports;
-ml.LogisticRegression = require('./LogisticRegression');
+ml.LogisticRegression = require('./src/LogisticRegression');
 getLogReg = require('./src/getLogReg');
 train=require('./src/training/train');
 predict=require('./src/predict/predict');

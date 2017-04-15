@@ -1,7 +1,7 @@
 let ml = module.exports;
-ml.LogisticRegression = require('../LogisticRegression');
+ml.LogisticRegression = require('./LogisticRegression');
 
-module.exports = function getLogReg(){
+module.exports = function getLogReg(predict){
 	var x = [[1, 1, 1, 0, 0, 0], [1, 0, 1, 0, 0, 0], [1, 1, 1, 0, 0, 0], [0, 0, 1, 1, 1, 0], [0, 0, 1, 1, 0, 0], [0, 0, 1, 1, 1, 0]];
 	var y = [[1, 0], [1, 0], [1, 0], [0, 1], [0, 1], [0, 1]];
 
@@ -21,7 +21,8 @@ module.exports = function getLogReg(){
 	  'epochs': training_epochs
 	});
 
-	x = [[1, 1, 0, 0, 0, 0], [0, 0, 0, 1, 1, 0], [1, 1, 1, 1, 1, 0]];
+	//x = [[1, 1, 0, 0, 0, 0], [0, 0, 0, 1, 1, 0], [1, 1, 1, 1, 1, 0]];
+	x = predict;
 
 	//console.log("Result : ", classifier.predict(x));
 	var result = classifier.predict(x);
