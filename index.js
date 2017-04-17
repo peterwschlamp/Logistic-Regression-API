@@ -1,4 +1,6 @@
 const Hapi = require('hapi');
+const Joi = require('joi');
+
 let ml = module.exports;
 ml.LogisticRegression = require('./src/LogisticRegression');
 train=require('./src/training/train');
@@ -21,6 +23,13 @@ server.route({
     path:'/predict',
     handler:function(request,reply){
         reply (predict.predict(request));
+    },
+    config: {
+      validate: {
+        params: {
+          data: Joi.object()
+        }
+      }
     }
 
 })
