@@ -1,21 +1,83 @@
 const Hapi = require('hapi');
+const Joi = require('joi');
+
 let ml = module.exports;
-ml.LogisticRegression = require('./LogisticRegression');
-getLogReg = require('./src/getLogReg');
-
-
+ml.LogisticRegression = require('./src/LogisticRegression');
+train=require('./src/training/train');
+predict=require('./src/predict/predict');
 
 const server = new Hapi.Server();
 server.connection({ port: 3000, host: 'localhost' });
 
 server.route({
-    method: 'GET',
-    path: '/hello/{user}',
-    handler: function (request, reply) {
-        //reply('Hello ' + encodeURIComponent(request.params.user) + '!');
-        reply(getLogReg());
+    method:'POST',
+    path:'/train',
+    handler:function(request,reply){
+       reply (train.train(request));
     }
-});
+})
+
+server.route({
+  method:'POST',
+  path:'/train/test',
+  handler:function(request,reply){
+    reply (train.train(request));
+  }
+})
+
+server.route({
+  method:'POST',
+  path:'/train/test/{object_id}',
+  handler:function(request,reply){
+    reply (train.train(request));
+  }
+})
+
+server.route({
+  method:'POST',
+  path:'/train/list',
+  handler:function(request,reply){
+    reply (train.train(request));
+  }
+})
+
+server.route({
+  method:'POST',
+  path:'/train/list/{object_id}',
+  handler:function(request,reply){
+    reply (train.train(request));
+  }
+})
+
+server.route({
+  method:'POST',
+  path:'/predict',
+  handler:function(request,reply){
+    reply (predict.predict(request));
+  },
+  config: {
+    validate: {
+      params: {
+        data: Joi.object()
+      }
+    }
+  }
+})
+
+server.route({
+  method:'POST',
+  path:'/predict/{id}',
+  handler:function(request,reply){
+    reply (predict.predict(request));
+  },
+  config: {
+    validate: {
+      params: {
+        data: Joi.object()
+      }
+    }
+  }
+})
 
 server.start((err) => {
 

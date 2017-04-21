@@ -1,7 +1,7 @@
 let ml = module.exports;
-ml.LogisticRegression = require('../LogisticRegression');
+ml.LogisticRegression = require('./LogisticRegression');
 
-module.exports = function getLogReg(){
+module.exports = function getLogReg(predictTheseInputs){
 	var x = [[1, 1, 1, 0, 0, 0], [1, 0, 1, 0, 0, 0], [1, 1, 1, 0, 0, 0], [0, 0, 1, 1, 1, 0], [0, 0, 1, 1, 0, 0], [0, 0, 1, 1, 1, 0]];
 	var y = [[1, 0], [1, 0], [1, 0], [0, 1], [0, 1], [0, 1]];
 
@@ -12,7 +12,7 @@ module.exports = function getLogReg(){
 	  'n_out': 2
 	});
 	//classifier.set('log level', 0);
-	classifier.set('log level', 0);
+	classifier.set('log level', 2);
 
 	var training_epochs = 900, lr = 0.01;
 
@@ -21,7 +21,37 @@ module.exports = function getLogReg(){
 	  'epochs': training_epochs
 	});
 
-	x = [[1, 1, 0, 0, 0, 0], [0, 0, 0, 1, 1, 0], [1, 1, 1, 1, 1, 0]];
+
+	//The following will be our equation created from above training. No need to store any data!
+  console.log("W : " + classifier.W);
+  console.log("b : " + classifier.b);
+
+	/*
+
+
+	FROM JUNKU:
+
+	 After training, you can get your logistic regression classifier's weight matrix W and bias vector b of output layer.
+	 console.log("W : " + classifier.W);
+	 console.log("b : " + classifier.b);
+
+	 Also, you can initialize weight matrix W and bias vector b with certain value before training classifier. (before calling train method of classifier. Default is zero matrix/vector.)
+	 classifier.W = initial_W;
+	 classifier.b = initial_b;
+
+	 classifier.train({...});
+
+
+	*/
+
+
+
+
+
+	///////////////////////////////////////NOW PREDICT////////////////////////////////////////////////////////
+
+	//x = [[1, 1, 0, 0, 0, 0], [0, 0, 0, 1, 1, 0], [1, 1, 1, 1, 1, 0]];
+	x = predictTheseInputs;
 
 	//console.log("Result : ", classifier.predict(x));
 	var result = classifier.predict(x);
