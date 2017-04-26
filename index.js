@@ -1,7 +1,13 @@
 const Hapi = require('hapi');
 const Joi = require('joi');
+const MongoClient = require('mongodb').MongoClient;
+let db;
 
 let ml = module.exports;
+MongoClient.connect('mongodb://127.0.0.1:27017/myNewDatabase', (err, database) => {
+	if (err) return console.log(err);
+	db = database;
+})
 ml.LogisticRegression = require('./src/LogisticRegression');
 train=require('./src/training/train');
 predict=require('./src/predict/predict');
@@ -10,10 +16,12 @@ const server = new Hapi.Server();
 server.connection({ port: 3000, host: 'localhost' });
 
 server.route({
-    method:'POST',
+    method:'GET',
     path:'/train',
     handler:function(request,reply){
-       reply (train.train(request));
+    	train.train(request, db, function(res){
+    		reply (res);
+    	})
     }
 })
 
