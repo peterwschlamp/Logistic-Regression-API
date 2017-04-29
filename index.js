@@ -16,7 +16,7 @@ const server = new Hapi.Server();
 server.connection({ port: 3000, host: 'localhost' });
 
 server.route({
-    method:'GET',
+    method:'POST',
     path:'/train',
     handler:function(request,reply){
     	train.train(request, db, function(res){
@@ -42,10 +42,12 @@ server.route({
 })
 
 server.route({
-  method:'POST',
+  method:'GET',
   path:'/train/list',
-  handler:function(request,reply){
-    reply (train.train(request));
+  handler:function(request, reply){
+    train.list(request, db, function(res){
+    	reply (res);
+    })
   }
 })
 
