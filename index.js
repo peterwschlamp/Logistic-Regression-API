@@ -19,11 +19,58 @@ server.route({
     method:'POST',
     path:'/train',
     handler:function(request,reply){
-    	train.train(request, db, function(res){
-    		reply (res);
+    	train.train(request, db, function(result){
+    		reply (result);
     	})
     }
 })
+
+server.route({
+  method:'GET',
+  path:'/train/list',
+  handler:function(request, reply){
+    train.list(request, db, function(result){
+    	reply (result);
+    })
+  }
+})
+
+server.route({
+  method:'POST',
+  path:'/train/list/{object_id}',
+  handler:function(request, reply){
+    train.list(request, db, function(result){
+    	reply (result);
+    })
+  }
+})
+
+server.route({
+  method:'POST',
+  path:'/predict',
+  handler:function(request, reply){
+    predict.predict(request, db, function(result){
+    	reply (result);
+    })
+  },
+  config: {
+    validate: {
+      params: {
+        data: Joi.object()
+      }
+    }
+  }
+})
+
+
+
+
+
+
+
+
+
+
 
 server.route({
   method:'POST',
@@ -38,39 +85,6 @@ server.route({
   path:'/train/test/{object_id}',
   handler:function(request,reply){
     reply (train.train(request));
-  }
-})
-
-server.route({
-  method:'GET',
-  path:'/train/list',
-  handler:function(request, reply){
-    train.list(request, db, function(res){
-    	reply (res);
-    })
-  }
-})
-
-server.route({
-  method:'POST',
-  path:'/train/list/{object_id}',
-  handler:function(request,reply){
-    reply (train.train(request));
-  }
-})
-
-server.route({
-  method:'POST',
-  path:'/predict',
-  handler:function(request,reply){
-    reply (predict.predict(request));
-  },
-  config: {
-    validate: {
-      params: {
-        data: Joi.object()
-      }
-    }
   }
 })
 

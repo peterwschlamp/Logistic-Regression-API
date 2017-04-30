@@ -1,18 +1,21 @@
 let ml = module.exports;
 ml.LogisticRegression = require('./LogisticRegression');
 
-module.exports = function getLogReg(predictTheseInputs){
-	var x = [[1, 1, 1, 0, 0, 0], [1, 0, 1, 0, 0, 0], [1, 1, 1, 0, 0, 0], [0, 0, 1, 1, 1, 0], [0, 0, 1, 1, 0, 0], [0, 0, 1, 1, 1, 0]];
-	var y = [[1, 0], [1, 0], [1, 0], [0, 1], [0, 1], [0, 1]];
+module.exports = function getLogReg(independents, dependents, predictTheseInputs){
+	//var x = [[1, 1, 1, 0, 0, 0], [1, 0, 1, 0, 0, 0], [1, 1, 1, 0, 0, 0], [0, 0, 1, 1, 1, 0], [0, 0, 1, 1, 0, 0], [0, 0, 1, 1, 1, 0]];
+	//var y = [[1, 0], [1, 0], [1, 0], [0, 1], [0, 1], [0, 1]];
+
+	var x = independents;
+	var y = dependents;
 
 	var classifier = new ml.LogisticRegression({
 	  'input': x,
 	  'label': y,
-	  'n_in': 6,
+	  'n_in': 4,
 	  'n_out': 2
 	});
-	//classifier.set('log level', 0);
-	classifier.set('log level', 2);
+	classifier.set('log level', 0);
+	//classifier.set('log level', 2);
 
 	var training_epochs = 900, lr = 0.01;
 
@@ -23,8 +26,8 @@ module.exports = function getLogReg(predictTheseInputs){
 
 
 	//The following will be our equation created from above training. No need to store any data!
-  console.log("W : " + classifier.W);
-  console.log("b : " + classifier.b);
+  //console.log("W : " + classifier.W);
+  //console.log("b : " + classifier.b);
 
 	/*
 
@@ -51,10 +54,10 @@ module.exports = function getLogReg(predictTheseInputs){
 	///////////////////////////////////////NOW PREDICT////////////////////////////////////////////////////////
 
 	//x = [[1, 1, 0, 0, 0, 0], [0, 0, 0, 1, 1, 0], [1, 1, 1, 1, 1, 0]];
-	x = predictTheseInputs;
+	x = [predictTheseInputs];//expects an array of arrays which is why i wrapped []
 
 	//console.log("Result : ", classifier.predict(x));
 	var result = classifier.predict(x);
-	console.log( "Score: ", result.map((r) => parseInt(r[0]*100)+'%') );
+	//console.log( "Score: ", result.map((r) => parseInt(r[0]*100)+'%') );
 	return "Scores: " + result.map((r) => parseInt(r[0]*100)+'%');
 }
