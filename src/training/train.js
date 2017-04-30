@@ -1,3 +1,6 @@
+let ml = module.exports;
+ml.LogisticRegression = require('../LogisticRegression');
+
 module.exports.list = function(request, db, callback) {
 	var collection = db.collection('myCollection');
 	collection.find().toArray(function(err, items) {
@@ -26,15 +29,31 @@ module.exports.train = function(request, db, callback) {
 		    			arrDependentData.push(1);
 		    			arrDependentData.push(0);
 		    		}
-		    		//arrDependentData.push(dependentValue);
 		    	}
 		  	}
 		}
 		arrRowsWithOnlyIndependentData.push(arrIndependentData);
 		arrRowsWithOnlyDependentData.push(arrDependentData);
 	});
+
+	var classifier = new ml.LogisticRegression({
+	  'input': arrRowsWithOnlyIndependentData,
+	  'label': arrRowsWithOnlyDependentData,
+	  'n_in': 4,
+	  'n_out': 2
+	});
+	classifier.set('log level', 0);
+	//classifier.set('log level', 2);
+	var training_epochs = 900, lr = 0.01;
+
+	classifier.train({
+	  'lr': lr,
+	  'epochs': training_epochs
+	});
+
+
 	trainingObjectToStore = Object.assign({}, {"independents": arrRowsWithOnlyIndependentData}, 
-		{"dependents": arrRowsWithOnlyDependentData});
+		{"dependents": arrRowsWithOnlyDependentData}, {"W": classifier.W}, {"b": classifier.b});
 
 	db.collection('myCollection')
 	.insertOne(trainingObjectToStore, function(err, result) {

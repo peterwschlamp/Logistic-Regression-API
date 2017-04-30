@@ -6,8 +6,9 @@ module.exports = function getLogReg(independents, dependents, predictTheseInputs
 	//var y = [[1, 0], [1, 0], [1, 0], [0, 1], [0, 1], [0, 1]];
 
 	var x = independents;
+	console.log(x);
 	var y = dependents;
-
+	console.log(y);
 	var classifier = new ml.LogisticRegression({
 	  'input': x,
 	  'label': y,
@@ -55,7 +56,7 @@ module.exports = function getLogReg(independents, dependents, predictTheseInputs
 
 	//x = [[1, 1, 0, 0, 0, 0], [0, 0, 0, 1, 1, 0], [1, 1, 1, 1, 1, 0]];
 	x = [predictTheseInputs];//expects an array of arrays which is why i wrapped []
-
+	console.log(x);
 	//console.log("Result : ", classifier.predict(x));
 	var result = classifier.predict(x);
 	//console.log( "Score: ", result.map((r) => parseInt(r[0]*100)+'%') );
