@@ -55,6 +55,10 @@ LogisticRegression.prototype.predict = function (x) {
   return math.softmaxMat(math.addMatVec(math.mulMat(x, self.W), self.b));
 };
 
+LogisticRegression.prototype.predictWithWeights = function (x, W, b) {
+  return math.softmaxMat(math.addMatVec(math.mulMat(x, W), b));
+};
+
 LogisticRegression.prototype.set = function (property, value) {
   var self = this;
   self.settings[property] = value;

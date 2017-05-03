@@ -10,16 +10,8 @@ module.exports.predict = function(request, db, callback) {
 
   var collection = db.collection('myCollection');
   collection.find().toArray(function(err, items) {
-    //console.log(items[0].dependents);
-    console.log( getLogReg(items[0].independents, items[0].dependents, request.payload.input.data) );
-    callback( getLogReg(items[0].independents, items[0].dependents, request.payload.input.data) );
+    let W=items[0].W;
+    let b=items[0].b;
+    callback(getLogReg(W, b, request.payload.input.data));
   });
-/*
-  if (err.error==null) {
-    return getLogReg(request.payload.input.data);
-  }
-  else {
-    return err;
-  }
-  */
 }

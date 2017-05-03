@@ -42,8 +42,8 @@ module.exports.train = function(request, db, callback) {
 	  'n_in': 4,
 	  'n_out': 2
 	});
-	classifier.set('log level', 0);
-	//classifier.set('log level', 2);
+	//classifier.set('log level', 0);
+	classifier.set('log level', 2);
 	var training_epochs = 900, lr = 0.01;
 
 	classifier.train({
