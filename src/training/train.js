@@ -14,8 +14,10 @@ module.exports.train = function(request, db, callback) {
 	let trainingObjectToStore;
   let objectKeys = [];
   let objectKeysSignature = '';
+  let n_in = -1;
 
   for (key in request.payload.training_set.data_rows[0]){
+    n_in++;
     objectKeys.push(key);
     objectKeysSignature += key;
 	}
@@ -47,7 +49,7 @@ module.exports.train = function(request, db, callback) {
 	var classifier = new ml.LogisticRegression({
 	  'input': arrRowsWithOnlyIndependentData,
 	  'label': arrRowsWithOnlyDependentData,
-	  'n_in': 4,
+	  'n_in': n_in,
 	  'n_out': 2
 	});
 	//classifier.set('log level', 0);
