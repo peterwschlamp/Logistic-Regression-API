@@ -13,8 +13,11 @@ module.exports.train = function(request, db, callback) {
 	let arrRowsWithOnlyDependentData = [];
 	let trainingObjectToStore;
   let objectKeys = [];
+  let objectKeysSignature = '';
+
   for (key in request.payload.training_set.data_rows[0]){
     objectKeys.push(key);
+    objectKeysSignature += key;
 	}
 	request.payload.training_set.data_rows.forEach((row) => {
 		let arrIndependentData = [];
@@ -57,7 +60,7 @@ module.exports.train = function(request, db, callback) {
 	});
 
 
-	trainingObjectToStore = Object.assign({}, { "keys": keys }, { "weights": classifier.W }, { "biases": classifier.b },
+	trainingObjectToStore = Object.assign({}, { "signature": objectKeysSignature }, { "keys": keys }, { "weights": classifier.W }, { "biases": classifier.b },
 		{ "entropy": classifier.getReconstructionCrossEntropy() }, { "date": new Date() });
 
 	db.collection('myCollection')
