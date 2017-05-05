@@ -12,6 +12,10 @@ module.exports.train = function(request, db, callback) {
 	let arrRowsWithOnlyIndependentData = [];
 	let arrRowsWithOnlyDependentData = [];
 	let trainingObjectToStore;
+  let objectKeys = [];
+  for (key in request.payload.training_set.data_rows[0]){
+    objectKeys.push(key);
+	}
 	request.payload.training_set.data_rows.forEach((row) => {
 		let arrIndependentData = [];
 		let arrDependentData = [];
@@ -36,6 +40,7 @@ module.exports.train = function(request, db, callback) {
 		arrRowsWithOnlyDependentData.push(arrDependentData);
 	});
 
+  var keys = objectKeys;
 	var classifier = new ml.LogisticRegression({
 	  'input': arrRowsWithOnlyIndependentData,
 	  'label': arrRowsWithOnlyDependentData,
@@ -52,8 +57,8 @@ module.exports.train = function(request, db, callback) {
 	});
 
 
-	trainingObjectToStore = Object.assign({}, {"independents": arrRowsWithOnlyIndependentData}, 
-		{"dependents": arrRowsWithOnlyDependentData}, {"W": classifier.W}, {"b": classifier.b});
+	trainingObjectToStore = Object.assign({}, { "keys": keys }, { "weights": classifier.W }, { "biases": classifier.b },
+		{ "entropy": classifier.getReconstructionCrossEntropy() }, { "date": new Date() });
 
 	db.collection('myCollection')
 	.insertOne(trainingObjectToStore, function(err, result) {
