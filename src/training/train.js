@@ -16,10 +16,12 @@ module.exports.train = function(request, db, callback) {
   let objectKeysSignature = '';
   let n_in = -1;
 
-  for (key in request.payload.training_set.data_rows[0]){
-    n_in++;
-    objectKeys.push(key);
-    objectKeysSignature += key;
+  	for (key in request.payload.training_set.data_rows[0]){
+	    n_in++;
+	    objectKeys.push(key);
+	    if (key.substring(0,3) !== 'is_' ) {
+	    	objectKeysSignature += key;
+	    }
 	}
 	request.payload.training_set.data_rows.forEach((row) => {
 		let arrIndependentData = [];
