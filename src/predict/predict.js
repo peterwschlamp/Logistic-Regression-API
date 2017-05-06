@@ -8,7 +8,9 @@ module.exports.predict = function(request, db, callback) {
     let b=items[0].biases;
 
     var classifier = new LogisticRegression({});
-    var result = classifier.predictWithWeights(predictThis, W, b);
-    callback( result[0][0] );
+    var results = classifier.predictWithWeights(predictThis, W, b);
+    callback({"results": results.map((result) =>
+      result[0]
+    )});
   });
 }

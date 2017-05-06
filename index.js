@@ -50,7 +50,7 @@ server.route({
   path:'/predict',
   handler:function(request, reply){
     predict.predict(request, db, function(result){
-    	reply ((result*100).toFixed(2) + '%');
+    	reply(result);
     })
   },
   config: {
