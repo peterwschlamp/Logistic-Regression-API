@@ -7,7 +7,6 @@ module.exports.predict = function(request, db, callback) {
   for (key in questions[0]){
     objectKeysSignature += key;
   }
-  console.log(objectKeysSignature);
   questions.forEach((question) => {
       let questionArray = [];
       for(let key in question) {
@@ -22,12 +21,14 @@ module.exports.predict = function(request, db, callback) {
       callback({"results": "Can't find training set using" + objectKeysSignature});
       return;
     }
+    console.log("Using document " + items[0].keys);
     let W=items[0].weights;
     let b=items[0].biases;
     let classifier = new LogisticRegression({});
     let results = classifier.predictWithWeights(questionsArray, W, b);
-    callback({"results": results.map((result) =>
-      result[0]
+    console.log(results);
+    callback({"results": results.map((result, index) =>
+      Object.assign({},{ "question": questions[index] } , { "result": result[0] })
     )});
   });
 }

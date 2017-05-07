@@ -62,6 +62,10 @@ module.exports.train = function(request, db, callback) {
 	  'lr': lr,
 	  'epochs': training_epochs
 	});
+	console.log(arrRowsWithOnlyDependentData);
+	console.log(arrRowsWithOnlyIndependentData);
+	console.log(n_in);
+	console.log( classifier.getReconstructionCrossEntropy() );
 
 
 	trainingObjectToStore = Object.assign({}, { "signature": objectKeysSignature }, { "keys": keys }, { "weights": classifier.W }, { "biases": classifier.b },
@@ -72,7 +76,7 @@ module.exports.train = function(request, db, callback) {
 	    if (err){
 	    	return "error inserting document"
 	    }
-    	console.log("Inserted a document into the restaurants collection.");
+    	console.log("Inserted a document into the collection.");
     	callback(result);
   	});	
 }

@@ -40,7 +40,7 @@ server.route({
   path:'/train/list/{object_id}',
   handler:function(request, reply){
     train.list(request, db, function(result){
-    	reply (result);
+    	reply (result.results[0]);
     })
   }
 })
@@ -50,7 +50,10 @@ server.route({
   path:'/predict',
   handler:function(request, reply){
     predict.predict(request, db, function(result){
-    	reply(result);
+    	console.log(result);
+    	reply(result.results.map((res) =>
+    		Object.assign({}, {"question":res.question}, {"result":Math.round(res.result*100)/100})
+    	));
     })
   },
   config: {
