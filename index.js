@@ -50,9 +50,15 @@ server.route({
   path:'/predict',
   handler:function(request, reply){
     predict.predict(request, db, function(result){
-    	console.log(result);
     	reply(result.results.map((res) =>
-    		Object.assign({}, {"question":res.question}, {"result":Math.round(res.result*100)/100})
+    		Object.assign({}, {"question":res.question}, {"predictionModel": res.predictionModel},
+    			{ "result": 
+	    			{
+	    			"dependentVariable": res.result.dependentVariable, 
+	    			"likelihood": Math.round(res.result.likelihood*100)/100
+	    			} 
+    			}
+    		)
     	));
     })
   },
