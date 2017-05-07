@@ -35,13 +35,18 @@ server.route({
   }
 })
 
-server.route({
+server.route({ 
   method:'POST',
-  path:'/train/list/{object_id}',
-  handler:function(request, reply){
-    train.list(request, db, function(result){
-    	reply (result.results[0]);
-    })
+  path:'/predict/test',
+  handler:function(request,reply){
+    predict.test(request.payload.input.data, db, 
+    	function(result){
+    		reply (JSON.stringify(result));
+    	},
+	    function(err){
+	    	reply(err);
+	    }
+    );
   }
 })
 
@@ -49,7 +54,7 @@ server.route({
   method:'POST',
   path:'/predict',
   handler:function(request, reply){
-    predict.predict(request, db, function(result){
+    predict.predict(request.payload.input.data, db, function(result){
     	reply(result.results.map((res) =>
     		Object.assign({}, {"question":res.question}, {"predictionModel": res.predictionModel},
     			{ "result": 
@@ -60,7 +65,11 @@ server.route({
     			}
     		)
     	));
-    })
+    },
+    	function(err){
+    		reply(err);
+    	}
+    )
   },
   config: {
     validate: {
@@ -83,9 +92,11 @@ server.route({
 
 server.route({
   method:'POST',
-  path:'/train/test',
-  handler:function(request,reply){
-    reply (train.train(request));
+  path:'/train/list/{object_id}',
+  handler:function(request, reply){
+    train.list(request, db, function(result){
+    	reply (result.results[0]);
+    })
   }
 })
 

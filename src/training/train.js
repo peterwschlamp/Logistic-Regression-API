@@ -2,7 +2,7 @@ let ml = module.exports;
 ml.LogisticRegression = require('../LogisticRegression');
 
 module.exports.list = function(request, db, callback) {
-	var collection = db.collection('myCollection');
+	let collection = db.collection('myCollection');
 	collection.find().toArray(function(err, items) {
 	  callback(items);
 	});
@@ -12,9 +12,9 @@ module.exports.train = function(request, db, callback) {
 	let arrRowsWithOnlyIndependentData = [];
 	let arrRowsWithOnlyDependentData = [];
 	let trainingObjectToStore;
-  let objectKeys = [];
-  let objectKeysSignature = '';
-  let n_in = -1;
+  	let objectKeys = [];
+  	let objectKeysSignature = '';
+  	let n_in = -1;
 
   	for (key in request.payload.training_set.data_rows[0]){
 	    n_in++;
@@ -46,7 +46,7 @@ module.exports.train = function(request, db, callback) {
 		arrRowsWithOnlyIndependentData.push(arrIndependentData);
 		arrRowsWithOnlyDependentData.push(arrDependentData);
 	});
-
+console.log(arrRowsWithOnlyDependentData, arrRowsWithOnlyIndependentData);
   var keys = objectKeys;
 	var classifier = new ml.LogisticRegression({
 	  'input': arrRowsWithOnlyIndependentData,
