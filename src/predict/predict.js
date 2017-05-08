@@ -41,7 +41,7 @@ module.exports.test = function(request, db, callback, error) {
     let b=items[0].biases;
     let classifier = new LogisticRegression({});
     let results = classifier.predictWithWeights(questionsArray, W, b);
-    callback(Object.assign({},{"actuals": actuals},{"results": results.map((result, index) =>
+    callback(Object.assign({}, {"results": results.map((result, index) =>
       Object.assign({},
         { "question": questions[index] }, 
         {"predictionModel": objectKeysSignature}, 
@@ -50,7 +50,8 @@ module.exports.test = function(request, db, callback, error) {
             "dependentVariable": dependentVariable[0], 
             "likelihood": result[0] 
           } 
-        }
+        },
+        {"actual": actuals[index]}
       )
     )}));
   });

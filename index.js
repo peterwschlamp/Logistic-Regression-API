@@ -41,7 +41,10 @@ server.route({
   handler:function(request,reply){
     predict.test(request.payload.input.data, db, 
     	function(result){
-    		reply (JSON.stringify(result));
+        let testResults= result.results.map((res) =>
+          Object.assign({}, {"predicted": res.result.likelihood, "predictedRounded": Math.round(res.result.likelihood)}, {"actual": res.actual})
+        );
+    		reply ({"testResults": testResults});
     	},
 	    function(err){
 	    	reply(err);
