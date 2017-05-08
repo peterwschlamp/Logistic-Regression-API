@@ -55,6 +55,29 @@ server.route({
 
 server.route({
   method:'POST',
+  path:'/predict/test/percentage',
+  handler:function(request,reply){
+    predict.test(request.payload.input.data, db,
+      function(result){
+        let count = 0;
+        let match = 0;
+        let percentageCorrect = result.results.forEach((res) => {
+          count++;
+          if ( Math.round(res.result.likelihood) === res.actual ) {
+            match++;
+          }
+        });
+        reply ({ "results": Object.assign({}, {"percentCorrect": (match/count)}, {"count": count}, {"matches": match}) });
+      },
+      function(err){
+        reply(err);
+      }
+    );
+  }
+})
+
+server.route({
+  method:'POST',
   path:'/predict',
   handler:function(request, reply){
     predict.predict(request.payload.input.data, db, function(result){
