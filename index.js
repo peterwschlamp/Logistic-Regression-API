@@ -16,37 +16,17 @@ const server = new Hapi.Server();
 server.connection({ port: 3000, host: 'localhost' });
 
 server.register(require('vision'), (err) => {
-
-
-
     server.views({
-    engines: {
-        html: require('handlebars')
-    },
-    relativeTo: __dirname,
-    path: './src/views',
-    layoutPath: './src/views/layout',
-    layout: 'default',
-});
+	    engines: {
+	        html: require('handlebars')
+	    },
+	    relativeTo: __dirname,
+	    path: './src/views',
+	    layoutPath: './src/views/layout',
+	    layout: 'default'
+	});
 
 });
-server.route
-({
-    method: 'GET',
-    path: '/',
-    handler: function (request, reply) {
-        // Render the view with the custom greeting
-        var data = {
-            title: 'This is Index!',
-            message: 'Hello, World. You crazy handlebars layout'
-        };
-
-        return reply.view('index', data);
-    }
-})
-
-
-
 
 server.route({
     method:'POST',
@@ -68,6 +48,16 @@ server.route({
   }
 })
 
+server.route({
+  method:'GET',
+  path:'/train/list/',
+  handler:function(request, reply){
+    train.list(request, db, function(result){
+    	return reply.view('list', {result});
+    })
+  }
+})
+
 server.route({ 
   method:'POST',
   path:'/predict/test',
@@ -75,7 +65,9 @@ server.route({
     predict.test(request.payload.input.data, db, 
     	function(result){
         let testResults= result.results.map((res) =>
-          Object.assign({}, {"predicted": res.result.likelihood, "predictedRounded": Math.round(res.result.likelihood)}, {"actual": res.actual})
+          Object.assign({}, {"predicted": res.result.likelihood, 
+          	"predictedRounded": Math.round(res.result.likelihood)}, 
+          	{"actual": res.actual})
         );
     		reply ({"testResults": testResults});
     	},
@@ -100,7 +92,8 @@ server.route({
             match++;
           }
         });
-        reply ({ "results": Object.assign({}, {"percentCorrect": (match/count)}, {"count": count}, {"matches": match}) });
+        reply ({ "results": Object.assign({}, {"percentCorrect": (match/count)}, 
+        	{"count": count}, {"matches": match}) });
       },
       function(err){
         reply(err);
@@ -138,16 +131,6 @@ server.route({
     }
   }
 })
-
-
-
-
-
-
-
-
-
-
 
 server.route({
   method:'POST',
