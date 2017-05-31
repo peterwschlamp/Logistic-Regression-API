@@ -1,0 +1,8 @@
+// https://er.educause.edu/blogs/2017/4/predicting-student-success-with-big-data
+Practice 1: Have a Vision and Plan
+Practice 2: Build a Supportive  Infrastructure
+Practice 3: Work to Ensure Proper Use of Data
+Practice 4: Design Predictive Models that Avoid Bias
+Practice 5: Meet Institutional Goals and  Improve Student Outcomes by Intervening with Care
+
+// https://www.edsurge.com/news/2016-12-15-can-financial-advisors-help-more-students-graduate-one-university-thinks-so
