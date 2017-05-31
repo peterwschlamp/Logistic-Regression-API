@@ -6,3 +6,6 @@ Practice 4: Design Predictive Models that Avoid Bias
 Practice 5: Meet Institutional Goals and  Improve Student Outcomes by Intervening with Care
 
 // https://www.edsurge.com/news/2016-12-15-can-financial-advisors-help-more-students-graduate-one-university-thinks-so
+
+// http://library.educause.edu/~/media/files/library/2017/4/ipasschecklistpasystem.pdf
+
